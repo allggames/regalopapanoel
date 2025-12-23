@@ -1,24 +1,25 @@
 :root{
-  --bg1: #fff9fa;
-  --bg2: #fff0f1;
-  --accent: #d83b3f;
+  --bg1: #fff7f8;
+  --bg2: #fff0f2;
+  --accent: #d94248;
   --muted: #444;
   --card: #ffffff;
+  --gift-shadow: rgba(0,0,0,0.18);
 }
 
-/* Reset ligero */
+/* Reset */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: radial-gradient(1200px 600px at 10% 10%, #ffecec 0%, transparent 6%), linear-gradient(180deg,var(--bg1),var(--bg2));
-  color: #222;
+  background: radial-gradient(900px 400px at 10% 12%, #ffecec 0%, transparent 6%), linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:#222;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
 
-/* Stage */
+/* Stage centrado */
 .stage{
   min-height:100vh;
   display:flex;
@@ -32,17 +33,17 @@ body{
 /* Título */
 .title{
   margin:0;
-  font-size:clamp(1.25rem,2.4vw,2rem);
+  font-size:clamp(1.1rem,2.2vw,1.6rem);
   color:var(--muted);
   text-align:center;
   letter-spacing:0.3px;
 }
 
-/* Contenedor Santa */
+/* Contenedor del Santa: tamaño responsive */
 .santa-wrapper{
   position:relative;
-  width:clamp(320px,48vw,680px);
-  max-width:95vw;
+  width:clamp(320px,50vw,720px);
+  max-width:96vw;
   aspect-ratio: 600 / 720;
   display:block;
   margin:auto;
@@ -51,44 +52,56 @@ body{
 }
 .santa-wrapper:hover{ transform:translateY(-6px) }
 
-/* SVG a tamaño del contenedor */
+/* svg ocupa todo */
 .santa-wrapper svg{ width:100%; height:100%; display:block; }
 
-/* Botones-regalo */
+/* BOTONES - regalos (estilo caja con lazo) */
 .gift{
   position:absolute;
-  width:84px;
-  height:84px;
+  width:86px;
+  height:86px;
   border-radius:14px;
   border: none;
   cursor:pointer;
-  background: linear-gradient(180deg,#ffd76b 0%, #ffc938 100%);
-  box-shadow: 0 16px 30px rgba(0,0,0,0.18), inset 0 -6px 8px rgba(0,0,0,0.06);
+  background: linear-gradient(180deg,#ffd86d 0%, #ffc63a 100%);
+  box-shadow: 0 18px 34px var(--gift-shadow), inset 0 -6px 10px rgba(0,0,0,0.06);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.65rem;
-  transition:transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
-  user-select:none;
+  transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
   -webkit-tap-highlight-color: transparent;
+  z-index:12;
+  padding:0;
 }
 
-/* Left and right positions (adjust to match hands) */
-.gift-left{ left:9.5%; top:46.5%; transform:translate(-10%,-50%); }
-.gift-right{ right:9.5%; top:46.5%; transform:translate(10%,-50%); }
+/* Position near hands - ajusta si usas otro tamaño */
+.gift-left{ left:9.2%; top:46.2%; transform:translate(-10%,-50%); }
+.gift-right{ right:9.2%; top:46.2%; transform:translate(10%,-50%); }
 
-.gift:hover{ transform:translateY(-8px) scale(1.03); box-shadow: 0 28px 40px rgba(0,0,0,0.22); }
+.gift:hover{ transform:translateY(-8px) scale(1.03); box-shadow: 0 28px 48px rgba(0,0,0,0.28); }
 .gift:active{ transform:translateY(-3px) scale(.98); }
 
-/* Ribbon look */
-.gift::before, .gift::after{
+/* Inner ribbon using pseudo-element like a little 3D bow */
+.gift-inner{
+  display:block;
+  width:62%;
+  height:62%;
+  border-radius:8px;
+  background:linear-gradient(180deg,#ffd76b,#ffc23a);
+  box-shadow: inset 0 -6px 10px rgba(0,0,0,0.06);
+  position:relative;
+}
+.gift-inner::before, .gift-inner::after{
   content:"";
   position:absolute;
-  background:#d83b3f;
+  background:#d94248;
   border-radius:3px;
 }
-.gift::before{ width:62%; height:12px; top:calc(50% - 6px); left:20%; transform:rotate(0deg);}
-.gift::after{ height:62%; width:12px; left:calc(50% - 6px); top:19%; transform:rotate(0deg); }
+.gift-inner::before{ width:100%; height:12px; left:0; top:calc(50% - 6px); }
+.gift-inner::after{ height:100%; width:12px; left:calc(50% - 6px); top:0; }
+
+/* pequeña pecita/bow encima */
+.gift-inner::marker{}
 
 /* Modal */
 .modal{
@@ -106,7 +119,7 @@ body{
 .modal[aria-hidden="false"]{ opacity:1; pointer-events:auto; }
 
 .modal-content{
-  width:clamp(260px, 80vw, 440px);
+  width:clamp(260px, 80vw, 420px);
   background:var(--card);
   border-radius:14px;
   padding:1.25rem;
@@ -163,9 +176,9 @@ body{
   100%{ transform: rotate(360deg); }
 }
 
-/* Ajustes responsivos */
+/* Responsive adjustments */
 @media (max-width:520px){
-  .gift{ width:64px; height:64px; font-size:1.1rem; border-radius:12px; }
-  .gift-left{ left:7%; }
-  .gift-right{ right:7%; }
+  .gift{ width:64px; height:64px; border-radius:12px; }
+  .gift-left{ left:7.2%; }
+  .gift-right{ right:7.2%; }
 }
