@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Papá Noel Interactivo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="stage" role="main">
+    <h1 class="title">¡Sorpresa de Navidad!</h1>
+
+    <div class="santa-wrapper" aria-label="Papá Noel con regalos">
+      <!-- SVG de Papá Noel estilizado -->
+      <svg id="santa" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="santaTitle">
+        <title id="santaTitle">Papá Noel sentado con dos regalos</title>
+
+        <!-- Sillón -->
+        <rect x="30" y="280" rx="25" ry="25" width="540" height="360" fill="#f25b64"/>
+        <rect x="80" y="320" rx="16" ry="16" width="440" height="260" fill="#ff6b6f"/>
+
+        <!-- Patas sillón -->
+        <rect x="110" y="620" width="40" height="40" fill="#e3b989" rx="6"/>
+        <rect x="450" y="620" width="40" height="40" fill="#e3b989" rx="6"/>
+
+        <!-- Cuerpo de Papá Noel -->
+        <ellipse cx="300" cy="380" rx="160" ry="120" fill="#ff6b6f"/>
+        <rect x="165" y="420" width="270" height="160" rx="60" fill="#ff6b6f"/>
+
+        <!-- Cinturón -->
+        <rect x="200" y="460" width="200" height="36" fill="#222"/>
+        <rect x="290" y="446" width="20" height="56" fill="#d4af37" rx="3"/>
+
+        <!-- Piernas y botas -->
+        <rect x="220" y="540" width="60" height="40" rx="20" fill="#222"/>
+        <rect x="320" y="540" width="60" height="40" rx="20" fill="#222"/>
+
+        <!-- Brazos -->
+        <rect x="110" y="370" width="70" height="28" rx="14" fill="#ff6b6f" transform="rotate(-12 110 370)"/>
+        <rect x="420" y="370" width="70" height="28" rx="14" fill="#ff6b6f" transform="rotate(12 420 370)"/>
+
+        <!-- Cara -->
+        <circle cx="300" cy="270" r="72" fill="#ffd1bf"/>
+        <!-- Bigote y barba -->
+        <path d="M222 300 q78 80 156 0" fill="#fff"/>
+        <path d="M240 320 q60 70 120 0 q60 70 120 0" fill="#fff" opacity="0.95"/>
+        <circle cx="300" cy="260" r="10" fill="#ff6b6f"/> <!-- nariz -->
+        <!-- Ojos -->
+        <path d="M270 250 q8 10 18 0" stroke="#111" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M330 250 q8 10 18 0" stroke="#111" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <!-- Gorro -->
+        <path d="M210 210 q90 -80 180 0" fill="#d94444"/>
+        <rect x="230" y="205" width="140" height="40" rx="20" fill="#fff"/>
+
+        <!-- Decoración gorro -->
+        <circle cx="395" cy="165" r="14" fill="#c33"/>
+        <path d="M260 200 q8 -12 20 -18" stroke="#2a8b3c" stroke-width="3" fill="none"/>
+
+        <!-- Mano izquierda (sosteniendo regalo izquierdo) - posición aproximada -->
+        <circle id="left-hand" cx="140" cy="360" r="20" fill="#ffd1bf"/>
+
+        <!-- Mano derecha (sosteniendo regalo derecho) -->
+        <circle id="right-hand" cx="460" cy="360" r="20" fill="#ffd1bf"/>
+
+        <!-- Regalos visuales dentro del SVG para coherencia (decorativos) -->
+        <g id="gifts-decorative">
+          <rect x="115" y="320" width="70" height="70" rx="8" ry="8" fill="#ffd358" stroke="#ffb84d" stroke-width="4"/>
+          <rect x="115" y="348" width="70" height="12" fill="#e44"/>
+          <rect x="415" y="320" width="70" height="70" rx="8" ry="8" fill="#ffd358" stroke="#ffb84d" stroke-width="4"/>
+          <rect x="415" y="348" width="70" height="12" fill="#e44"/>
+        </g>
+      </svg>
+
+      <!-- Botones de regalo (sitúan encima de las manos). Accesibles y responsivos -->
+      <button class="gift gift-left" data-gift="left" aria-label="Abrir regalo izquierdo">🎁</button>
+      <button class="gift gift-right" data-gift="right" aria-label="Abrir regalo derecho">🎁</button>
+    </div>
+
+    <!-- Modal de felicitación -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+        <h2 id="modalTitle">¡Felicidades!</h2>
+        <p id="modalMessage"></p>
+        <button id="modalOk" class="btn">Cerrar</button>
+      </div>
+    </div>
+
+    <!-- Contenedor para confetti -->
+    <div id="confetti-container" aria-hidden="true"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
