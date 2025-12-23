@@ -1,10 +1,10 @@
 :root{
-  --bg1: #fff7f8;
+  --bg1: #fff8f9;
   --bg2: #fff0f2;
   --accent: #d94248;
   --muted: #444;
   --card: #ffffff;
-  --gift-shadow: rgba(0,0,0,0.18);
+  --gift-shadow: rgba(0,0,0,0.22);
 }
 
 /* Reset */
@@ -19,7 +19,7 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
-/* Stage centrado */
+/* Stage */
 .stage{
   min-height:100vh;
   display:flex;
@@ -30,38 +30,42 @@ body{
   padding:2rem;
 }
 
-/* Título */
 .title{
   margin:0;
   font-size:clamp(1.1rem,2.2vw,1.6rem);
   color:var(--muted);
   text-align:center;
-  letter-spacing:0.3px;
 }
 
-/* Contenedor del Santa: tamaño responsive */
-.santa-wrapper{
+/* Canvas wrapper: responsive */
+.canvas-wrap{
   position:relative;
-  width:clamp(320px,50vw,720px);
+  width:clamp(360px,56vw,900px);
   max-width:96vw;
   aspect-ratio: 600 / 720;
+  background: transparent;
   display:block;
-  margin:auto;
+  border-radius:18px;
+  padding:0;
   user-select:none;
-  transition:transform .22s ease;
+  -webkit-user-select:none;
 }
-.santa-wrapper:hover{ transform:translateY(-6px) }
 
-/* svg ocupa todo */
-.santa-wrapper svg{ width:100%; height:100%; display:block; }
+/* Canvas fills wrapper */
+#santaCanvas{
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:18px;
+}
 
-/* BOTONES - regalos (estilo caja con lazo) */
+/* Gift buttons */
 .gift{
   position:absolute;
-  width:86px;
-  height:86px;
+  width:88px;
+  height:88px;
   border-radius:14px;
-  border: none;
+  border:none;
   cursor:pointer;
   background: linear-gradient(180deg,#ffd86d 0%, #ffc63a 100%);
   box-shadow: 0 18px 34px var(--gift-shadow), inset 0 -6px 10px rgba(0,0,0,0.06);
@@ -69,39 +73,11 @@ body{
   align-items:center;
   justify-content:center;
   transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
-  -webkit-tap-highlight-color: transparent;
   z-index:12;
-  padding:0;
+  -webkit-tap-highlight-color: transparent;
 }
-
-/* Position near hands - ajusta si usas otro tamaño */
-.gift-left{ left:9.2%; top:46.2%; transform:translate(-10%,-50%); }
-.gift-right{ right:9.2%; top:46.2%; transform:translate(10%,-50%); }
-
-.gift:hover{ transform:translateY(-8px) scale(1.03); box-shadow: 0 28px 48px rgba(0,0,0,0.28); }
-.gift:active{ transform:translateY(-3px) scale(.98); }
-
-/* Inner ribbon using pseudo-element like a little 3D bow */
-.gift-inner{
-  display:block;
-  width:62%;
-  height:62%;
-  border-radius:8px;
-  background:linear-gradient(180deg,#ffd76b,#ffc23a);
-  box-shadow: inset 0 -6px 10px rgba(0,0,0,0.06);
-  position:relative;
-}
-.gift-inner::before, .gift-inner::after{
-  content:"";
-  position:absolute;
-  background:#d94248;
-  border-radius:3px;
-}
-.gift-inner::before{ width:100%; height:12px; left:0; top:calc(50% - 6px); }
-.gift-inner::after{ height:100%; width:12px; left:calc(50% - 6px); top:0; }
-
-/* pequeña pecita/bow encima */
-.gift-inner::marker{}
+.gift:active{ transform:translateY(2px) scale(.98); }
+.gift-label{ font-size:1.6rem; pointer-events:none; }
 
 /* Modal */
 .modal{
@@ -117,13 +93,12 @@ body{
   z-index:60;
 }
 .modal[aria-hidden="false"]{ opacity:1; pointer-events:auto; }
-
 .modal-content{
-  width:clamp(260px, 80vw, 420px);
+  width:clamp(300px, 84vw, 520px);
   background:var(--card);
   border-radius:14px;
   padding:1.25rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.3);
   text-align:center;
   position:relative;
 }
@@ -137,7 +112,32 @@ body{
   cursor:pointer;
 }
 .modal h2{ margin:0 0 .4rem 0; color:var(--accent) }
-.modal p{ margin:0 0 1rem 0; color:var(--muted) }
+.modal p{ margin:0 0 .75rem 0; color:var(--muted) }
+.coupon-area{
+  margin:0.5rem 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.coupon-card{
+  background: linear-gradient(180deg,#fffefe,#fffbf6);
+  border-radius:10px;
+  padding:0.6rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.4rem;
+}
+.coupon-code{
+  font-weight:700;
+  color:#c42b31;
+  letter-spacing:1px;
+  font-size:1rem;
+}
+.modal-actions{ margin-top:0.75rem; }
 .btn{
   background:linear-gradient(180deg,var(--accent),#b02a33);
   color:white;
@@ -166,7 +166,6 @@ body{
   will-change: transform, opacity;
   animation: fall 1300ms linear forwards, spin 900ms linear infinite;
 }
-
 @keyframes fall{
   0%{ transform: translateY(-12vh) rotate(0deg); opacity:1; }
   100%{ transform: translateY(110vh) rotate(720deg); opacity:0.95; }
@@ -178,7 +177,5 @@ body{
 
 /* Responsive adjustments */
 @media (max-width:520px){
-  .gift{ width:64px; height:64px; border-radius:12px; }
-  .gift-left{ left:7.2%; }
-  .gift-right{ right:7.2%; }
+  .gift{ width:64px; height:64px; }
 }
